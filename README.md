@@ -15,13 +15,15 @@ This application is a prototype of a Cloud application developed in Python and F
 Pull the Cassandra Docker Image:
 
 ```
+sudo apt update
+sudo apt install docker.io
 sudo docker pull cassandra:latest
 ```
 
 Run a Cassandra instance within docker:
 
 ```
-sudo docker run --name cassandra-miniproject -p 9042:9042 -d cassandra:latest
+sudo docker run --name cassandra-Miniproject -p 9042:9042 -d cassandra:latest
 ```
 
 Interact with Cassandra via its native command line shell client called ‘cqlsh’ using CQL:
