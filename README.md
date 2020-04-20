@@ -3,8 +3,11 @@ Cloud Computing Coursework
 
 ## COVID19 Application: 
 This application is a prototype of a Cloud application developed in Python and Flask where one can use GET, POST, PUT and DELETE methods to interact with the application.
+
 1.It is a REST-based service interface and makes use of an external REST service being the Coronavirus API (https://covid19api.com/)
+
 2.It makes use of a Cloud database in Apache Cassandra.
+
 3.The application is served over HTTPS.
 
 ## REST API Requests
