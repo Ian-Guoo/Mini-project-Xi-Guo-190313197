@@ -38,7 +38,7 @@ Interact with Cassandra via its native command line shell client called ‘cqlsh
  Within the Cassandra terminal, create a keyspace for the data to be inserted into:
 
 ```CQL
-CREATE KEYSPACE covid19 WITH REPLICATION = {'Type' : 'SimpleStrategy', 'replication_factor' : 1};
+CREATE KEYSPACE covid19 WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1};
 ```
 
 Create the table inside of the keyspace, specifying all column names and types, firstly create a database table for global stats:
