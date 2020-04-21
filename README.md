@@ -10,6 +10,8 @@ This application is a prototype of a Cloud application developed in Python and F
 
 3.The application is served over HTTPS.
 
+4.Kubernetes based load balancing
+
 ## 1.REST API Requests
 
 ### @app.route('/', methods =['GET'])
@@ -111,4 +113,9 @@ Bulit imgae and run
 sudo docker build . --tag=cassandrarest:v1
 sudo docker run -p 80:80 cassandrarest:v1
 ```
+## 4.Kubernetes based load balancing
 
+Install Kubernetes
+```
+sudo snap install microk8s -classic
+```
