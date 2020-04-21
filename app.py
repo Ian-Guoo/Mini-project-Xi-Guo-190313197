@@ -4,7 +4,7 @@ from cassandra.cluster import Cluster
 import requests
 import requests_cache
 
-cluster = Cluster(contact_points=['127.0.0.1'],port=9042)
+cluster = Cluster(contact_points=['172.17.0.1'],port=9042)
 session = cluster.connect()
 requests_cache.install_cache('covid19_cache', backend='sqlite', expire_after=36000)
 app = Flask(__name__)
@@ -100,10 +100,10 @@ def country(name):
 
 @app.route('/country',  methods=['POST'])
 def create_country():
-    if not request.json or not 'Country' in request.json:
+    if not request.json or not 'country' in request.json:
         return jsonify({'error':'the new record needs to have a country'}),200
-    name = request.json['Country']
-    rows = session.execute("""Select * from covid19.summary WHERE Country = '{}'""".format(name))
+    name = request.json['country']
+    rows = session.execute("""Select * from covid19.summary WHERE country = '{}'""".format(name))
     result = []
     for r in rows:
         result.append({"Country": r.country,
@@ -116,16 +116,16 @@ def create_country():
     if len(result) != 0:
         return jsonify({'error': 'The country already exists'}), 409
     else:
-        session.execute( """INSERT INTO COVID19.summary(Country,NewConfirmed,TotalConfirmed,NewDeaths,TotalDeaths,NewRecovered,TotalRecovered) \ 
-            VALUES('{}', {}, {}, {},{}, {}, {})""".format(request.json['Country'],int(request.json['NewConfirmed']),int(request.json['TotalConfirmed']),int(request.json['NewDeaths']),int(request.json['TotalDeaths']),int(request.json['NewRecovered']),int(request.json['TotalRecovered'])))
-        return jsonify({'message': 'created: /country/{}'.format(request.json['Country'])}), 201
+        session.execute( """INSERT INTO covid19.summary(country,newconfirmed,totalconfirmed,newdeaths,totaldeaths,newrecovered,totalrecovered)\
+        VALUES('{}', {}, {}, {},{}, {}, {})""".format(request.json['country'],int(request.json['newconfirmed']),int(request.json['totalconfirmed']),int(request.json['newdeaths']),int(request.json['totaldeaths']),int(request.json['newrecovered']),int(request.json['totalrecovered'])))
+        return jsonify({'message': 'created: /country/{}'.format(request.json['country'])}), 201
 
 @app.route('/country',  methods=['PUT'])
 def update_country():
-    if not request.json or not 'Country' in request.json:
+    if not request.json or not 'country' in request.json:
         return jsonify({'error':'the new record needs to have a country'}),200
-    name = request.json['Country']
-    rows = session.execute("""Select * from covid19.summary WHERE Country = '{}'""".format(name))
+    name = request.json['country']
+    rows = session.execute("""Select * from covid19.summary WHERE country = '{}'""".format(name))
     result = []
     for r in rows:
         result.append({"Country": r.country,
@@ -138,15 +138,15 @@ def update_country():
     if len(result) == 0:
         return jsonify({'error': 'The country not exists'}), 409
     else:
-        session.execute("""UPDATE COVID19.summary SET NewConfirmed= {}, TotalConfirmed= {}, NewDeaths= {}, TotalDeaths= {},NewRecovered= {},TotalRecovered= {} WHERE Country= '{}'""".format(int(request.json['NewConfirmed']),int(request.json['TotalConfirmed']),int(request.json['NewDeaths']),int(request.json['TotalDeaths']),int(request.json['NewRecovered']),int(request.json['TotalRecovered']),request.json['Country']))
-        return jsonify({'message': 'updated: /country/{}'.format(request.json['Country'])}), 200
+        session.execute("""UPDATE COVID19.summary SET newconfirmed= {}, totalconfirmed= {}, newdeaths= {}, totaldeaths= {},newrecovered= {},totalrecovered= {} WHERE country= '{}'""".format(int(request.json['newconfirmed']),int(request.json['totalconfirmed']),int(request.json['newdeaths']),int(request.json['totaldeaths']),int(request.json['newrecovered']),int(request.json['totalrecovered']),request.json['country']))
+        return jsonify({'message': 'updated: /country/{}'.format(request.json['country'])}), 200
 
 @app.route('/country',  methods=['DELETE'])
 def delete_country():
-    if not request.json or not 'Country' in request.json:
+    if not request.json or not 'country' in request.json:
         return jsonify({'error':'the new record needs to have a country'}),200
-    name = request.json['Country']
-    rows = session.execute("""Select * from covid19.summary WHERE Country = '{}'""".format(name))
+    name = request.json['country']
+    rows = session.execute("""Select * from covid19.summary WHERE country = '{}'""".format(name))
     result = []
     for r in rows:
         result.append({"Country": r.country,
@@ -159,9 +159,9 @@ def delete_country():
     if len(result) == 0:
         return jsonify({'error': 'The country not exists'}), 409
     else:
-        session.execute("""DELETE FROM COVID19.summary WHERE Country= '{}'""".format(request.json['Country']))
-        return jsonify({'message': 'deleted: /country/{}'.format(request.json['Country'])}), 200
+        session.execute("""DELETE FROM COVID19.summary WHERE country= '{}'""".format(request.json['country']))
+        return jsonify({'message': 'deleted: /country/{}'.format(request.json['country'])}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=80)
 
