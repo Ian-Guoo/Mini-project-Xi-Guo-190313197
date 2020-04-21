@@ -30,19 +30,19 @@ Search the covid19 data by country name.
 ### @app.route('/country',  methods=['POST'])
 Insert new country' covid19 data to the Cassandra Database.
 ```curl
-curl -i -H "Content-Type: application/json" -X POST -d '{"Country":"a","Newconfirmed":1,"Totalconfirmed":1,"Newdeaths":1,"Totaldeaths":1,"Newrecovered":1,"Totalrecovered":1}' http://54.89.254.114:8080/country
+curl -i -H "Content-Type: application/json" -X POST -d '{"country":"a","newconfirmed":1,"totalconfirmed":1,"newdeaths":1,"totaldeaths":1,"newrecovered":1,"totalrecovered":1}' http://54.89.254.114:80/country
 ```
 
 ### @app.route('/country',  methods=['PUT'])
 Change the covid19 data of one country existed in database.
 ```curl
-curl -i -H "Content-Type: application/json" -X PUT -d '{"Country":"a","Newconfirmed":2,"Totalconfirmed":2,"Newdeaths":2,"Totaldeaths":2,"Newrecovered":2,"Totalrecovered":2}' http://54.89.254.114:8080/country
+curl -i -H "Content-Type: application/json" -X PUT -d '{"country":"a","newconfirmed":2,"totalconfirmed":2,"newdeaths":2,"totaldeaths":2,"newrecovered":2,"totalrecovered":2}' http://54.89.254.114:80/country
 ```
 
 ### @app.route('/country',  methods=['DELETE'])
 Delete the covid19 data of one country existed in database.
 ```curl
-curl -X "DELETE" http://54.89.254.114:8080/country/a
+curl -X "DELETE" http://54.89.254.114:80/country/a
 ```
 
 
@@ -110,8 +110,8 @@ CMD ["python","app.py"]
 
 Bulit imgae and run
 ```
-sudo docker build . --tag=cassandrarest:v1
-sudo docker run -p 80:80 cassandrarest:v1
+sudo docker build . --tag=covid19:v1
+sudo docker run -p 80:80 covid19:v1
 ```
 ## 4.Kubernetes based load balancing
 
