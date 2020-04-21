@@ -4,7 +4,7 @@ from cassandra.cluster import Cluster
 import requests
 import requests_cache
 
-cluster = Cluster(contact_points=['172.17.0.1'],port=9042)
+cluster = Cluster(contact_points=['172.17.0.2'],port=9042)
 session = cluster.connect()
 requests_cache.install_cache('covid19_cache', backend='sqlite', expire_after=36000)
 app = Flask(__name__)
@@ -163,5 +163,5 @@ def delete_country():
         return jsonify({'message': 'deleted: /country/{}'.format(request.json['country'])}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=80)
+    app.run(host='0.0.0.0', port=8080)
 
