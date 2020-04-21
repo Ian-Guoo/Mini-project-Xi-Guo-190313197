@@ -123,12 +123,12 @@ sudo docker run -p 8080:8080 covid19:v4
 
 Install Kubernetes
 ```
-sudo snap install microk8s -classic
+sudo snap install microk8s --classic
 ```
 
 Develop an nginx application,listening on port 80, and names the deployment "covid19-web"
 ```
-sudo microk8s.kubectl run covid19-web --image==nginx --port=80
+sudo microk8s.kubectl run covid19-web --image==covid19:v4 --port=80
 ```
 See the pods created:
 ```
