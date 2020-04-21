@@ -119,3 +119,29 @@ Install Kubernetes
 ```
 sudo snap install microk8s -classic
 ```
+
+Develop an nginx application,listening on port 80, and names the deployment "covid19-web"
+```
+sudo microk8s.kubectl run covid19-web --image==nginx --port=80
+```
+See the pods created:
+```
+sudo microk8s.kubectl get pods
+```
+Expose cluster to the external world
+```
+sudo microk8s.kubectl expose deployment covid19-web --type=LoadBalancer
+```
+Scaling up application
+```
+sudo microk8s.kubectl scale deployment covid19-web --replicas=5
+```
+Check the replias
+```
+sudo microk8s.kubectl get pods
+```
+### cleaning up 
+Delete the load-balancing service:
+```
+sudo microk8s.kubectl delete service covid19-web
+```
