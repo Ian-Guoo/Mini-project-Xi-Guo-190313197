@@ -42,7 +42,7 @@ curl -i -H "Content-Type: application/json" -X PUT -d '{"country":"a","newconfir
 ### @app.route('/country',  methods=['DELETE'])
 Delete the covid19 data of one country existed in database.
 ```curl
-curl -X "DELETE" http://54.89.254.114:80/country/a
+curl -i -H "Content-Type: application/json" -X DELETE -d '{"country":"a"}' http://54.89.254.114:80/country
 ```
 
 
