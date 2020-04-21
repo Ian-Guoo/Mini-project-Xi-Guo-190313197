@@ -10,10 +10,42 @@ This application is a prototype of a Cloud application developed in Python and F
 
 3.The application is served over HTTPS.
 
-## REST API Requests
+## 1.REST API Requests
+
+### @app.route('/', methods =['GET'])
+The home page show the data of global covid19. And extract the data from the Coronavirus API (https://covid19api.com/summary). These data are stored to the Cassandra Database.
+Shom instructions of this application are shown in the home page.
+
+### @app.route('/countrylist', methods=['GET'])
+Show all the county existed in the Cassandra Database.
+
+### @app.route('/country', methods=['GET'])
+Show covid19 data of each country in the Cassandra Database.
+
+### @app.route('/country/<name>',  methods=['GET'])
+Search the covid19 data by country name.
+
+### @app.route('/country',  methods=['POST'])
+Insert new country' covid19 data to the Cassandra Database.
+```curl
+curl -i -H "Content-Type: application/json" -X POST -d '{"Country":"a","Newconfirmed":1,"Totalconfirmed":1,"Newdeaths":1,"Totaldeaths":1,"Newrecovered":1,"Totalrecovered":1}' http://54.89.254.114:8080/country
+```
+
+### @app.route('/country',  methods=['PUT'])
+Change the covid19 data of one country existed in database.
+```curl
+curl -i -H "Content-Type: application/json" -X PUT -d '{"Country":"a","Newconfirmed":2,"Totalconfirmed":2,"Newdeaths":2,"Totaldeaths":2,"Newrecovered":2,"Totalrecovered":2}' http://54.89.254.114:8080/country
+```
+
+### @app.route('/country',  methods=['DELETE'])
+Delete the covid19 data of one country existed in database.
+```curl
+curl -X "DELETE" http://54.89.254.114:8080/country/a
+```
 
 
-## Deploying Cassandra via Docker
+
+## 2.Deploying Cassandra via Docker
 
 Pull the Cassandra Docker Image:
 
@@ -26,13 +58,13 @@ sudo docker pull cassandra:latest
 Run a Cassandra instance within docker:
 
 ```
-sudo docker run --name cassandra-miniproject -p 9042:9042 -d cassandra:latest
+sudo docker run --name cassandra-project -p 9042:9042 -d cassandra:latest
 ```
 
 Interact with Cassandra via its native command line shell client called ‘cqlsh’ using CQL:
 
 ```
-  sudo docker exec -it cassandra-miniproject cqlsh
+  sudo docker exec -it cassandra-project cqlsh
 ```
 
  Within the Cassandra terminal, create a keyspace for the data to be inserted into:
@@ -52,4 +84,31 @@ Secondly create a database table for summary stats:
 CREATE TABLE covid19.summary (Country text PRIMARY KEY,NewConfirmed int, TotalConfirmed int, NewDeaths int, TotalDeaths int, NewRecovered int, TotalRecovered int);
 ```
 
+
+## 3.Serving the application over https.
+
+Creat requirments.txt
+```
+pip
+Flask
+cassandra-driver
+requests
+requests_cache
+```
+
+Create the Dockerfile.
+```
+FROM python:3.7-alpine
+WORKDIR /myapp
+COPY . /myapp
+RUN pip install -U -r requirements.txt
+EXPOSE 8080
+CMD ["python","app.py"]
+```
+
+Bulit imgae and run
+```
+sudo docker build . --tag=cassandrarest:v1
+sudo docker run -p 80:80 cassandrarest:v1
+```
 
