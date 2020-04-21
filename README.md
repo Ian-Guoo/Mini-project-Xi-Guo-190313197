@@ -69,7 +69,12 @@ Interact with Cassandra via its native command line shell client called ‘cqlsh
   sudo docker exec -it cassandra-project cqlsh
 ```
 
- Within the Cassandra terminal, create a keyspace for the data to be inserted into:
+Start Database
+```
+sudo docker start cassandra-project
+```
+
+Within the Cassandra terminal, create a keyspace for the data to be inserted into:
 
 ```CQL
 CREATE KEYSPACE covid19 WITH REPLICATION = {'class' : 'SimpleStrategy', 'replication_factor' : 1};
