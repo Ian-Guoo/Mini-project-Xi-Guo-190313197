@@ -115,6 +115,7 @@ CMD ["python","app.py"]
 
 Bulit imgae and run
 ```
+cd covid19
 sudo docker build . --tag=covid19:v1
 sudo docker run -p 80:80 covid19:v1
 ```
