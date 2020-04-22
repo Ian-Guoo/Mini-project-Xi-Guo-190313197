@@ -30,19 +30,19 @@ Search the covid19 data by country name.
 ### @app.route('/country',  methods=['POST'])
 Insert new country' covid19 data to the Cassandra Database.
 ```curl
-curl -i -H "Content-Type: application/json" -X POST -d '{"country":"a","newconfirmed":1,"totalconfirmed":1,"newdeaths":1,"totaldeaths":1,"newrecovered":1,"totalrecovered":1}' http://54.89.254.114:8080/country
+curl -i -H "Content-Type: application/json" -X POST -d '{"country":"a","newconfirmed":1,"totalconfirmed":1,"newdeaths":1,"totaldeaths":1,"newrecovered":1,"totalrecovered":1}' http://54.89.254.114:50/country
 ```
 
 ### @app.route('/country',  methods=['PUT'])
 Change the covid19 data of one country existed in database.
 ```curl
-curl -i -H "Content-Type: application/json" -X PUT -d '{"country":"a","newconfirmed":2,"totalconfirmed":2,"newdeaths":2,"totaldeaths":2,"newrecovered":2,"totalrecovered":2}' http://54.89.254.114:8080/country
+curl -i -H "Content-Type: application/json" -X PUT -d '{"country":"a","newconfirmed":2,"totalconfirmed":2,"newdeaths":2,"totaldeaths":2,"newrecovered":2,"totalrecovered":2}' http://54.89.254.114:50/country
 ```
 
 ### @app.route('/country',  methods=['DELETE'])
 Delete the covid19 data of one country existed in database.
 ```curl
-curl -i -H "Content-Type: application/json" -X DELETE -d '{"country":"a"}' http://54.89.254.114:8080/country
+curl -i -H "Content-Type: application/json" -X DELETE -d '{"country":"a"}' http://54.89.254.114:50/country
 ```
 
 
